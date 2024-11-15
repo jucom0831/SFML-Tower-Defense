@@ -38,6 +38,7 @@
     <ClInclude Include="Framework\TextGo.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="Framework\Variables.h" />
+    <ClInclude Include="Tank.h" />
     <ClInclude Include="Tilemap.h" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,7 @@
     <ClCompile Include="Framework\TextGo.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="Framework\Variables.cpp" />
+    <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tilemap.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
