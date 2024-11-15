@@ -4,10 +4,10 @@
 
 void Framework::Init(int width, int height, const std::string& name)
 {
-    FONT_MGR.Load("fonts/DS-DIGI.ttf");
+    //FONT_MGR.Load("fonts/DS-DIGI.ttf");
 
-	window.create(sf::VideoMode(width, height), name);
-    DATATABLE_MGR.Init();
+    window.create(sf::VideoMode(1920, 1080), "Tilemap");
+    //DATATABLE_MGR.Init();
     Utils::Init();
     SCENE_MGR.Init();
     InputMgr::Init();
@@ -38,6 +38,7 @@ void Framework::Do()
             Variables::isDrawHitBox = !Variables::isDrawHitBox;
         }
 
+
         SCENE_MGR.Update(deltaTime);
         SCENE_MGR.LateUpdate(deltaTime);
 
@@ -52,6 +53,6 @@ void Framework::Do()
 void Framework::Release()
 {
     SCENE_MGR.Release();
-    FONT_MGR.Unload("fonts/DS-DIGI.ttf");
-    DATATABLE_MGR.Release();
+    //FONT_MGR.Unload("fonts/DS-DIGI.ttf");
+    //DATATABLE_MGR.Release();
 }

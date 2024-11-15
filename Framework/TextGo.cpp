@@ -22,7 +22,7 @@ void TextGo::SetOrigin(const sf::Vector2f& newOrigin)
 void TextGo::Reset()
 {
 	text.setFont(FONT_MGR.Get(fontId));
-	SetString(stringId);
+	//SetString(stringId);
 	//SetOrigin(originPreset);
 }
 
@@ -49,24 +49,24 @@ void TextGo::Draw(sf::RenderWindow& window)
 	window.draw(text);
 }
 
-void TextGo::OnLocalize(Languages lang)
-{
-	text.setString(STRING_TABLE->Get(stringId, lang));
-	SetOrigin(originPreset);
-}
-
-void TextGo::Set(int size, const sf::Color &color)
-{
-	text.setCharacterSize(size);
-	text.setFillColor(color);
-}
-
-void TextGo::SetString(const std::string& id)
-{
-	stringId = id;
-	text.setString(STRING_TABLE->Get(stringId));
-	SetOrigin(originPreset);
-}
+//void TextGo::OnLocalize(Languages lang)
+//{
+//	text.setString(STRING_TABLE->Get(stringId, lang));
+//	SetOrigin(originPreset);
+//}
+//
+//void TextGo::Set(int size, const sf::Color &color)
+//{
+//	text.setCharacterSize(size);
+//	text.setFillColor(color);
+//}
+//
+//void TextGo::SetString(const std::string& id)
+//{
+//	stringId = id;
+//	text.setString(STRING_TABLE->Get(stringId));
+//	SetOrigin(originPreset);
+//}
 
 void TextGo::Init()
 {

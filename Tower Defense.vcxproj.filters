@@ -24,9 +24,6 @@
     <ClInclude Include="Framework\stdafx.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\StringTable.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\TextGo.h">
       <Filter>Framework</Filter>
     </ClInclude>
@@ -34,12 +31,6 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Variables.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\DataTable.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\DataTableMgr.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Defines.h">
@@ -63,9 +54,6 @@
     <ClInclude Include="Framework\ObjectPool.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\rapidcsv.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\ResourceMgr.h">
       <Filter>Framework</Filter>
     </ClInclude>
@@ -84,12 +72,15 @@
     <ClInclude Include="Framework\SoundMgr.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\SceneDev2.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\stdafx.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\StringTable.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Framework\TextGo.cpp">
@@ -99,12 +90,6 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Variables.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\DataTable.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\DataTableMgr.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Framework.cpp">
@@ -135,6 +120,12 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Framework\SpriteGo.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\SceneDev2.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
   </ItemGroup>

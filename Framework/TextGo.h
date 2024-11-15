@@ -19,14 +19,14 @@ public:
 	void SetRotation(float angle) override;
 	void SetScale(const sf::Vector2f& scale) override;
 
-	void Set(int size, const sf::Color& color = sf::Color::White);
-	void SetString(const std::string& id);
+	//void Set(int size, const sf::Color& color = sf::Color::White);
+	//void SetString(const std::string& id);
 	void Init() override;
 	void Release() override;
 	void Reset() override;
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void OnLocalize(Languages lang) override;
+	//void OnLocalize(Languages lang) override;
 };
 

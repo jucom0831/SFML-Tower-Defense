@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "SceneDev2.h"
-#include "AniPlayer.h"
 
 SceneDev2::SceneDev2() : Scene(SceneIds::Dev2)
 {
@@ -9,7 +8,6 @@ SceneDev2::SceneDev2() : Scene(SceneIds::Dev2)
 
 void SceneDev2::Init()
 {
-	AddGo(new AniPlayer("ANI TEST"));
 	Scene::Init();
 }
 
