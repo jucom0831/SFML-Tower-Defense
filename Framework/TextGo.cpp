@@ -54,19 +54,19 @@ void TextGo::Draw(sf::RenderWindow& window)
 //	text.setString(STRING_TABLE->Get(stringId, lang));
 //	SetOrigin(originPreset);
 //}
-//
-//void TextGo::Set(int size, const sf::Color &color)
-//{
-//	text.setCharacterSize(size);
-//	text.setFillColor(color);
-//}
-//
-//void TextGo::SetString(const std::string& id)
-//{
-//	stringId = id;
-//	text.setString(STRING_TABLE->Get(stringId));
-//	SetOrigin(originPreset);
-//}
+
+void TextGo::Set(int size, const sf::Color &color)
+{
+	text.setCharacterSize(size);
+	text.setFillColor(color);
+}
+
+void TextGo::SetString(const std::string& id)
+{
+	stringId = id;
+	text.setString(stringId);
+	SetOrigin(originPreset);
+}
 
 void TextGo::Init()
 {

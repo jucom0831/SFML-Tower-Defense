@@ -3,20 +3,31 @@
 
 class Tilemap : public GameObject
 
+
 {
+public:
+enum class Types {
+	tankTile,
+	enemyTile,
+	startTile,
+	endTile,
+};
+
 protected:
+	Types type;
+
 	sf::VertexArray va;
-	std::string spriteSheetId = "graphics/terrain_2.png";
-	std::string spriteSheetId2 = "graphics/terrain_4.png";
-	sf::Texture texture;
+	sf::Texture tiletexture;
 	sf::Transform transfrom;
 
 	sf::Vector2i cellCount;
 	sf::Vector2f cellSize;
 
-
+	std::vector<Types> tankType;
+	std::vector<sf::RectangleShape> cellBounds;
 
 public:
+
 	Tilemap(const std::string& name = "");
 	~Tilemap() = default;
 
@@ -39,5 +50,25 @@ public:
 	sf::FloatRect GetGlobalBounds()const override;
 
 	bool load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height);
+	void SetType(int t, Types type);
+	bool CheckIsSameType(int index, Types type);
+	size_t GetTypeVecSize() const { return tankType.size(); }
+
+	int level[209] =
+	{
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,
+		0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,
+		0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,
+		0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,
+		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+		0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,
+		0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,
+		0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,
+		0,0,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	};
+
+	bool IsValidTankTile(sf::Vector2f mousepos);
 
 };

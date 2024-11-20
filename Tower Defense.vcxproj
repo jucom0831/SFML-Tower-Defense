@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Framework\Defines.h" />
     <ClInclude Include="Framework\Framework.h" />
     <ClInclude Include="Framework\GameObject.h" />
@@ -40,8 +42,11 @@
     <ClInclude Include="Framework\Variables.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tilemap.h" />
+    <ClInclude Include="UiHud.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\HitBox.cpp" />
@@ -59,6 +64,7 @@
     <ClCompile Include="Framework\Variables.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tilemap.cpp" />
+    <ClCompile Include="UiHud.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

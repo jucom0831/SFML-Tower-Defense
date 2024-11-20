@@ -60,9 +60,6 @@
     <ClInclude Include="Framework\Scene.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\SceneDev1.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\SceneMgr.h">
       <Filter>Framework</Filter>
     </ClInclude>
@@ -79,6 +76,18 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Tank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\SceneDev1.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="UiHud.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,9 +122,6 @@
     <ClCompile Include="Framework\Scene.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\SceneDev1.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\SceneMgr.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -132,6 +138,18 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Tank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\SceneDev1.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="UiHud.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
