@@ -61,9 +61,18 @@ void UiHud::Reset()
 	hpIcon.setPosition(5.f, 10.f);
 	addTank.setTexture(TEXTURE_MGR.Get("graphics/Tank1.png"));
 	Utils::SetOrigin(addTank, Origins::MC);
-	addTank.setPosition(900.f, 100.f);
+	addTank.setPosition(970.f, 60.f);
+	addTank.setScale(0.6f, 1.0f);
+	textWave.setFont(font);
+	textWave.setCharacterSize(textSize + 20.f );
+	textWave.setFillColor(sf::Color::White);
+	textWave.setOutlineThickness(1.f);
+	textWave.setPosition(480.f, 20.f);
+	textWave.setScale(0.6f, 1.0f);
+
 
 	SetHpText(10, 10);
+	Setwave(1);
 }
 
 void UiHud::Update(float dt)
@@ -75,10 +84,17 @@ void UiHud::Draw(sf::RenderWindow& window)
 	window.draw(hpText);
 	window.draw(hpIcon);
 	window.draw(addTank);
+	window.draw(textWave);
 }
 
 void UiHud::SetHpText(int s, int t)
 {
 	hpText.setString(std::to_string(s) + " / " + std::to_string(t));
 	Utils::SetOrigin(hpText, Origins::BL);
+}
+
+void UiHud::Setwave(int w)
+{
+	textWave.setString("Wave : " + std::to_string(w));
+	Utils::SetOrigin(textWave, Origins::MC);
 }

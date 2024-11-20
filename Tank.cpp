@@ -63,9 +63,6 @@ void Tank::Reset()
 {
 	SetType(Types::Tank1);
 	sceneDev1 = dynamic_cast<SceneDev1*>(SCENE_MGR.GetCurrentScene());
-
-    sceneDev1->GetEnemyList();
-
 	body.setTexture(TEXTURE_MGR.Get(textureId));
 	SetOrigin(Origins::MC);
 	SetRotation(0.f);
@@ -74,9 +71,9 @@ void Tank::Reset()
 
 void Tank::Update(float dt)
 {
-	if (isAttack = true) {
+	if (sceneDev1->TankAttack() == true) {
 		for (auto find : sceneDev1->GetEnemyList()) {
-			if (find != nullptr && Utils::Distance(position, find->GetPosition()) > 1000000000)
+			if (find != nullptr && Utils::Distance(position, find->GetPosition()) > 10)
 			{
 				direction = Utils::GetNormal(find->GetPosition() - position);
 				look = Utils::GetNormal(find->GetPosition() - position);
@@ -89,9 +86,6 @@ void Tank::Update(float dt)
 				}
 			}
 		}
-	}
-	if (InputMgr::GetMouseButtonUp(sf::Mouse::Right)) {
-		SetType((Tank::Types)(Utils::Clamp((int)type + 1, 0, 2)));
 	}
 	
 }
@@ -108,18 +102,26 @@ void Tank::SetType(Types type)
 	{
 	case Types::Tank1:
 		textureId = "graphics/Tank1.png";
+		range = 800;
 		damage = 10;
 		break;
 	case Types::Tank2:
 		textureId = "graphics/Tank2.png";
+		range = 750;
 		damage = 30;
 		break;
 	case Types::Tank3:
 		textureId = "graphics/Tank3.png";
 		damage = 50;
+		range = 700;
 		break;
 	}
 	body.setTexture(TEXTURE_MGR.Get(textureId), true);
+}
+
+void Tank::TankUpgrade(Tank& tank)
+{
+	SetType((Tank::Types)(Utils::Clamp((int)type + 1, 0, 2)));
 }
 
 void Tank::Shoot()

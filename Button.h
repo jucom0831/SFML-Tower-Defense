@@ -1,19 +1,19 @@
 #pragma once
 #include "GameObject.h"
-class UiHud : public GameObject
+class SceneDev1;
+
+class Button : public GameObject
 {
+
 protected:
-	sf::Sprite hpIcon;
-	sf::Text hpText;
+	sf::Sprite body;
+	std::string textureId = "graphics/Button1.png";
 
-	TextGo text;
-	sf::Sprite addTank;
-
-	sf::Text textWave;
+	SceneDev1* sceneDev1;
 
 public:
-	UiHud(const std::string& name = "");
-	~UiHud() = default;
+	Button(const std::string& name = "");
+	~Button() = default;
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float angle) override;
@@ -28,6 +28,7 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void SetHpText(int s, int t);
-	void Setwave(int w);
+	sf::FloatRect GetLocalBounds() const override;
+	sf::FloatRect GetGlobalBounds() const override;
 };
+

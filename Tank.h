@@ -29,8 +29,8 @@ protected:
 	SceneDev1* sceneDev1;
 	Enemy* enemy;
 	float shootTimer = 0.f;
-	float shootDelay = 0.2f;
-
+	float shootDelay = 0.8f;
+	int range;
 	int damage = 0;
 
 	bool isAttack = false;
@@ -51,9 +51,9 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
-
+	
 	void SetType(Types type);
-
+	void TankUpgrade(Tank& tank);
 	void Shoot();
 
 	sf::FloatRect GetLocalBounds() const;

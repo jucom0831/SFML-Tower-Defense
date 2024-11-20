@@ -6,6 +6,7 @@ class Tank;
 class Bullet;
 class Enemy;
 class UiHud;
+class Button;
 
 class SceneDev1 : public Scene
 {
@@ -14,9 +15,12 @@ protected:
 
 	Tilemap* tilemap;
 	Tank* tank;
-	Tank* tank2;
 	Enemy* enemy;
 	UiHud* uiHud;
+	Button* button;
+
+	std::list<Tank*> tanks;
+	ObjectPool<Tank> tankPool;
 
 	std::list<Enemy*> enemys;
 	ObjectPool<Enemy> enemyPool;
@@ -24,17 +28,26 @@ protected:
 	std::list<Bullet*> bullets;
 	ObjectPool<Bullet> bulletPool;
 
-	bool isDragging = false;
-
 	sf::Vector2f dragOffset;
 
 	float spawnDeley = 3.f;
 	float spawntime = 0.f;
+	float wavetime = 0.f;
 
 	int mainHp = 10;
 	int maxHp = 10;
 
+	int wave = 1;
+	int enemyDeathCount = 0;
+
+	bool isEnemydie = false;
+	bool isTankAttack = false;
+
 public:
+
+	bool isDragging = false;
+	bool isDragend = false;
+
 	SceneDev1();
 	~SceneDev1() = default;
 
@@ -45,6 +58,7 @@ public:
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window) override;
 
+	void AddTank(int count);
 	void SpawnEnemys(int count);
 
 	Bullet* TakeBullet();
@@ -52,6 +66,12 @@ public:
 	const std::list<Enemy*>& GetEnemyList() const { return enemys; }
 
 	void OnEnemyDie(Enemy* enemy);
+
+	void EnemyWave();
+
+	int EnemyDeath();
+
+	bool TankAttack();
 
 };
 

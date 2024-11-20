@@ -89,10 +89,11 @@ void Enemy::Update(float dt)
 		isEnemyActive = false;
 		DieTimer += dt;
 		//body.setTexture(TEXTURE_MGR.Get("graphics/blood.png"), true);
-		if (DieTimer > DieDelay) {
-			sceneDev1->OnEnemyDie(this);
-			DieTimer = 0.f;
-		}
+		std::cout << "t" << std::endl;
+		sceneDev1->OnEnemyDie(this);
+		sceneDev1->EnemyDeath();
+		DieTimer = 0.f;
+
 	}
 }
 
@@ -111,7 +112,7 @@ void Enemy::SetType(Types type)
 	case Types::Enemy1:
 		textureId = "graphics/enemy1.png";
 		hp = 150;
-		speed = 1000.f;
+		speed = 100.f;
 		break;
 	case Types::Enemy2:
 		textureId = "graphics/enemy3.png";

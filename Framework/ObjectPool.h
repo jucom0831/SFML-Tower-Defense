@@ -24,10 +24,10 @@ public:
 		{
 			delete obj;
 		}
-		for (auto obj : used)
-		{
-			delete obj;
-		}
+		//for (auto obj : used)
+		//{
+		//	delete obj;
+		//}
 	}
 
 	T* Take()
