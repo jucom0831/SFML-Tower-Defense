@@ -53,12 +53,15 @@ void UiHud::Reset()
 	hpText.setCharacterSize(textSize);
 	hpText.setFillColor(sf::Color::White);
 	Utils::SetOrigin(hpText, Origins::TL);
+	hpText.setScale(0.7f, 1.f);
+	hpText.setPosition(35.f, 40.f);
 	hpIcon.setTexture(TEXTURE_MGR.Get("graphics/heart.png"));
 	Utils::SetOrigin(hpIcon, Origins::TL);
 	hpIcon.setScale(0.3f, 0.5f);
-	hpText.setScale(0.7f, 1.f);
 	hpIcon.setPosition(5.f, 10.f);
-	hpText.setPosition(35.f, 40.f);
+	addTank.setTexture(TEXTURE_MGR.Get("graphics/Tank1.png"));
+	Utils::SetOrigin(addTank, Origins::MC);
+	addTank.setPosition(900.f, 100.f);
 
 	SetHpText(10, 10);
 }
@@ -71,6 +74,7 @@ void UiHud::Draw(sf::RenderWindow& window)
 {
 	window.draw(hpText);
 	window.draw(hpIcon);
+	window.draw(addTank);
 }
 
 void UiHud::SetHpText(int s, int t)

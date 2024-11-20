@@ -60,6 +60,7 @@ void Enemy::Reset()
 	SetOrigin(Origins::MC);
 	SetRotation(0.f);
 	SetScale({ 1.5f, 1.5f });
+	isEnemyDead = false;
 }
 
 void Enemy::Update(float dt)
@@ -76,7 +77,8 @@ void Enemy::Update(float dt)
 
 	SetRotation(Utils::Angle(direction));
 	if ((std::abs(position.x - path[12].x) < 1.0f && std::abs(position.y - path[12].y) < 1.0f)) {
-		sceneDev1->OnEnemyDie(this);
+		isEnemyDead = true;
+		//sceneDev1->OnEnemyDie(this);
 	}
 	hitbox.UpdateTr(body, GetLocalBounds());
 	if (hp <= 0 && sceneDev1 != nullptr)
@@ -138,6 +140,11 @@ void Enemy::SetType(Types type)
 void Enemy::OnDamage(int d)
 {
 	hp -= d;
+}
+
+bool Enemy::OnEnemyDead()
+{
+	return isEnemyDead;
 }
 
 sf::FloatRect Enemy::GetLocalBounds() const

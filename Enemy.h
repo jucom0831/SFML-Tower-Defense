@@ -31,6 +31,7 @@ protected:
 	SceneDev1* sceneDev1;
 
 	bool isEnemyActive = false;
+	bool isEnemyDead = false;
 	int hp = 0;
 
 	float DieTimer = 0.f;
@@ -75,6 +76,7 @@ public:
 	void SetType(Types type);
 
 	void OnDamage(int d);
+	bool OnEnemyDead();
 
 	sf::FloatRect GetLocalBounds() const override;
 	sf::FloatRect GetGlobalBounds() const override;

@@ -7,6 +7,7 @@ protected:
 	sf::Text hpText;
 
 	TextGo text;
+	sf::Sprite addTank;
 
 public:
 	UiHud(const std::string& name = "");

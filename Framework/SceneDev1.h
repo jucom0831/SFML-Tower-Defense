@@ -31,6 +31,9 @@ protected:
 	float spawnDeley = 3.f;
 	float spawntime = 0.f;
 
+	int mainHp = 10;
+	int maxHp = 10;
+
 public:
 	SceneDev1();
 	~SceneDev1() = default;

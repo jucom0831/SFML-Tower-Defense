@@ -13,11 +13,10 @@ SceneDev1::SceneDev1() : Scene(SceneIds::Dev1)
 void SceneDev1::Init()
 {
 	tank = AddGo(new Tank("Tank"));
-	tank2 = AddGo(new Tank("Tank"));
 	tilemap = AddGo(new Tilemap("Tilemap"));
 	uiHud = AddGo(new UiHud("Ui"));
 
-	tank2->SetPosition(sf::Vector2f(910.f, -470.f));
+
 	Scene::Init();
 	spawntime = 3.f;
 }
@@ -64,8 +63,8 @@ void SceneDev1::Update(float dt)
 	Scene::Update(dt);
 	if (tank->GetGlobalBounds().contains(mousePos)) {
 		if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left)) {
-					isDragging = true;
-					dragOffset = mousePos - tank->GetPosition();
+			isDragging = true;
+			dragOffset = mousePos - tank->GetPosition();
 		}
 	}
 
@@ -85,16 +84,24 @@ void SceneDev1::Update(float dt)
 		isDragging = false;
 	}
 
-	if (tank2->GetGlobalBounds().contains(mousePos)) {
-		if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left)) {
-			Tank* newTank = new Tank(*tank);
-			newTank->SetPosition(mousePos);
-		}
-	}
+
 	spawntime += dt;
 	if (spawntime > spawnDeley) {
 		SpawnEnemys(1);
 		spawntime = 0.f;
+	}
+
+	std::queue<Enemy*> deleteQue;
+	for(auto find : enemys)
+	if (find->OnEnemyDead() == true) {
+		mainHp--;
+		uiHud->SetHpText(mainHp, maxHp);
+		deleteQue.push(find);
+	}
+	while (!deleteQue.empty())
+	{
+		OnEnemyDie(deleteQue.front());
+		deleteQue.pop();
 	}
 }
 
