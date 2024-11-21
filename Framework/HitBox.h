@@ -7,6 +7,7 @@ public:
 
 	sf::RectangleShape rect;
 
-	void UpdateTr(const sf::Transformable& tr, const sf::FloatRect& localBound);
+	void UpdateTr(const sf::Transformable& tr, const sf::FloatRect& localBounds);
+	void UpdateTrForEnemy(const sf::Transformable& tr, const sf::FloatRect& localBound);
 	void Draw(sf::RenderWindow& window);
 };

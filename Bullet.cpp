@@ -54,7 +54,7 @@ sf::FloatRect Bullet::GetGlobalBounds() const
 void Bullet::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
-	sortingOrder = 1;
+	sortingOrder = 0;
 }
 
 void Bullet::Release()
@@ -76,7 +76,17 @@ void Bullet::Reset()
 void Bullet::Update(float dt)
 {
 	SetPosition(position + direction * speed * dt);
-	hitbox.UpdateTr(body, GetLocalBounds());
+	sf::FloatRect localBounds = GetLocalBounds();
+	float hitboxscale = 0.4f;
+
+
+	sf::FloatRect scaledBounds = {
+		localBounds.left ,
+		localBounds.top + 23.f,
+		localBounds.width,
+		localBounds.height * hitboxscale,
+	};
+	hitbox.UpdateTrForEnemy(body, scaledBounds);
 }
 
 void Bullet::FixedUpdate(float dt)

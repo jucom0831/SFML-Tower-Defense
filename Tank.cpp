@@ -47,11 +47,10 @@ void Tank::SetOrigin(const sf::Vector2f& newOrigin)
 void Tank::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
-	sortingOrder = 0;
+	sortingOrder = 1;
 	SetOrigin(Origins::MC);
 	
 	isAttack = true;
-	
 }
 
 void Tank::Release()
@@ -71,19 +70,34 @@ void Tank::Reset()
 
 void Tank::Update(float dt)
 {
+	hitbox.UpdateTr(body, GetLocalBounds());
+
 	if (sceneDev1->TankAttack() == true) {
+		float lookDistance = std::numeric_limits<float>::max();
+		sf::Vector2f lookEnemyPosition;
+		Enemy* lookEnemy = nullptr;
+
 		for (auto find : sceneDev1->GetEnemyList()) {
-			if (find != nullptr && Utils::Distance(position, find->GetPosition()) > 10)
-			{
-				direction = Utils::GetNormal(find->GetPosition() - position);
-				look = Utils::GetNormal(find->GetPosition() - position);
-				SetRotation(Utils::Angle(direction));
-				shootTimer += dt;
-				if (shootTimer > shootDelay)
-				{
-					shootTimer = 0.f;
-					Shoot();
+			if (find != nullptr) {
+				sf::Vector2f rangeenemy = find->GetPosition() - position;
+				float distance = Utils::Distance(position, find->GetPosition());
+				if (distance < lookDistance && distance < Utils::Magnitude(rangetank)) {
+					lookDistance = distance;
+					lookEnemy = find;
+					lookEnemyPosition = find->GetPosition();
 				}
+			}
+		}
+
+		if (lookEnemy != nullptr) {
+			direction = Utils::GetNormal(lookEnemyPosition - position);
+			look = Utils::GetNormal(lookEnemyPosition - position);
+			SetRotation(Utils::Angle(direction));
+
+			shootTimer += dt;
+			if (shootTimer > shootDelay) {
+				shootTimer = 0.f;
+				Shoot();
 			}
 		}
 	}
@@ -138,4 +152,9 @@ sf::FloatRect Tank::GetLocalBounds() const
 sf::FloatRect Tank::GetGlobalBounds() const
 {
 	return body.getGlobalBounds();
+}
+
+void Tank::SetActive(bool active)
+{
+	isActive = active;
 }

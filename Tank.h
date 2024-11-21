@@ -25,6 +25,8 @@ protected:
 
 	sf::Vector2f direction;
 	sf::Vector2f look;
+	sf::Vector2f rangetank = { 200.f, 200.f };
+
 
 	SceneDev1* sceneDev1;
 	Enemy* enemy;
@@ -35,6 +37,7 @@ protected:
 
 	bool isAttack = false;
 
+	bool isActive = true;
 
 public:
 	Tank(const std::string& name = "");
@@ -58,6 +61,8 @@ public:
 
 	sf::FloatRect GetLocalBounds() const;
 	sf::FloatRect GetGlobalBounds() const;
+
+	void SetActive(bool active);
 
 };
 

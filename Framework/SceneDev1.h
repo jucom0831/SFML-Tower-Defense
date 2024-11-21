@@ -38,6 +38,7 @@ protected:
 	int maxHp = 10;
 
 	int wave = 1;
+	int waveCount = 0;
 	int enemyDeathCount = 0;
 
 	bool isEnemydie = false;
@@ -67,11 +68,12 @@ public:
 
 	void OnEnemyDie(Enemy* enemy);
 
-	void EnemyWave();
+	void ReturnTank(Tank* tank);
+
+	void EnemyWave(int count);
 
 	void EnemyDeathActive(bool d);
 
 	bool TankAttack();
-
 };
 

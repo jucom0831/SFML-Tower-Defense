@@ -44,8 +44,9 @@ void Enemy::SetOrigin(const sf::Vector2f& newOrigin)
 void Enemy::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
-	sortingOrder = 0;
+	sortingOrder = -1;
 	isEnemyActive = true;
+	SetType(type);
 }
 
 void Enemy::Release()
@@ -54,17 +55,18 @@ void Enemy::Release()
 
 void Enemy::Reset()
 {
-	SetType(type);
 	sceneDev1 = dynamic_cast<SceneDev1*>(SCENE_MGR.GetCurrentScene());
-	body.setTexture(TEXTURE_MGR.Get(textureId));
+	body.setTexture(TEXTURE_MGR.Get(textureId), true);
 	SetOrigin(Origins::MC);
 	SetRotation(0.f);
 	SetScale({ 1.5f, 1.5f });
 	isEnemyDead = false;
+	currentTargetIndex = 0;
 }
 
 void Enemy::Update(float dt)
 {
+
 	sf::Vector2f target = path[currentTargetIndex];
 	direction = target - position;
 	if (direction != sf::Vector2f(0, 0)) {
@@ -84,14 +86,25 @@ void Enemy::Update(float dt)
 	if (hp <= 0 && sceneDev1 != nullptr)
 	{
 		isEnemyActive = false;
-		DieTimer += dt;
 		//body.setTexture(TEXTURE_MGR.Get("graphics/blood.png"), true);
 		sceneDev1->OnEnemyDie(this);
 		sceneDev1->EnemyDeathActive(true);
-		sceneDev1->EnemyDeathActive(false);
-		DieTimer = 0.f;
-
 	}
+
+	sf::FloatRect localBounds = GetLocalBounds();
+	float hitboxscale = 0.4f;
+
+	
+	sf::FloatRect scaledBounds = {
+		localBounds.left ,
+		localBounds.top + 23.f,
+		localBounds.width,
+		localBounds.height * hitboxscale,
+	};
+
+	hitbox.UpdateTrForEnemy(body, scaledBounds);
+
+
 }
 
 
@@ -109,27 +122,27 @@ void Enemy::SetType(Types type)
 	case Types::Enemy1:
 		textureId = "graphics/enemy1.png";
 		hp = 150;
-		speed = 100.f;
+		speed = 120.f;
 		break;
 	case Types::Enemy2:
 		textureId = "graphics/enemy3.png";
 		hp = 300;
-		speed = 120.f;
+		speed = 150.f;
 		break;
 	case Types::Enemy3:
 		textureId = "graphics/enemy5.png";
-		hp = 1200;
+		hp = 1000;
 		speed = 70.f;
 		break;
 	case Types::Enemy4:
 		textureId = "graphics/enemy8.png";
-		hp = 600;
-		speed = 150.f;
+		hp = 500;
+		speed = 250.f;
 		break;
 	case Types::Enemy5:
 		textureId = "graphics/enemy15.png";
 		hp = 1500;
-		speed = 100.f;
+		speed = 150.f;
 		break;
 		body.setTexture(TEXTURE_MGR.Get(textureId), true);
 	}

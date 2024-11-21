@@ -19,7 +19,7 @@ public:
 
 
 protected:
-	Types type = Types::Enemy1;
+	Types type;
 
 	sf::Sprite body;
 	std::string textureId;
@@ -74,7 +74,6 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SetType(Types type);
-
 	void OnDamage(int d);
 	bool OnEnemyDead();
 
