@@ -119,7 +119,7 @@ void Tank::SetType(Types type)
 	body.setTexture(TEXTURE_MGR.Get(textureId), true);
 }
 
-void Tank::TankUpgrade(Tank& tank)
+void Tank::TankUpgrade(Tank* tank)
 {
 	SetType((Tank::Types)(Utils::Clamp((int)type + 1, 0, 2)));
 }

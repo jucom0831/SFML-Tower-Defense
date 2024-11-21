@@ -54,7 +54,6 @@ public:
 		auto find = std::find(used.begin(), used.end(), obj);
 		if (find == used.end())
 		{
-			std::cout << "Invaild Obj" << std::endl;
 			return;
 		}
 		used.erase(find);

@@ -69,7 +69,7 @@ public:
 
 	void EnemyWave();
 
-	int EnemyDeath();
+	void EnemyDeathActive(bool d);
 
 	bool TankAttack();
 

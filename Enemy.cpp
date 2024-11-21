@@ -83,15 +83,12 @@ void Enemy::Update(float dt)
 	hitbox.UpdateTr(body, GetLocalBounds());
 	if (hp <= 0 && sceneDev1 != nullptr)
 	{
-		if (isEnemyActive == true) {
-
-		}
 		isEnemyActive = false;
 		DieTimer += dt;
 		//body.setTexture(TEXTURE_MGR.Get("graphics/blood.png"), true);
-		std::cout << "t" << std::endl;
 		sceneDev1->OnEnemyDie(this);
-		sceneDev1->EnemyDeath();
+		sceneDev1->EnemyDeathActive(true);
+		sceneDev1->EnemyDeathActive(false);
 		DieTimer = 0.f;
 
 	}

@@ -53,7 +53,7 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 	
 	void SetType(Types type);
-	void TankUpgrade(Tank& tank);
+	void TankUpgrade(Tank* tank);
 	void Shoot();
 
 	sf::FloatRect GetLocalBounds() const;

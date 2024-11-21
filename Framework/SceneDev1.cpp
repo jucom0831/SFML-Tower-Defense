@@ -57,8 +57,7 @@ void SceneDev1::Exit()
 void SceneDev1::Update(float dt)
 {
 	sf::Vector2f mousePos = ScreenToWorld(InputMgr::GetMousePosition());
-	std::cout << mousePos.x << "," << mousePos.y << std::endl;
-
+	//std::cout << mousePos.x << "," << mousePos.y << std::endl;
 	sf::Vector2f mouseUiPos = ScreenToUi(InputMgr::GetMousePosition());
 
 	Scene::Update(dt);
@@ -85,13 +84,12 @@ void SceneDev1::Update(float dt)
 				else
 				{
 					find->SetPosition(button->GetPosition());
-					isTankAttack = true;
 				}
 				isDragging = false;
 			}
 
 			if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right)) {
-				//find->TankUpgrade(find);
+				find->TankUpgrade(find);
 			}
 		}
 	}
@@ -99,7 +97,7 @@ void SceneDev1::Update(float dt)
 		if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left)) {
 			AddTank(1);
 			isDragend = false;
-			isTankAttack = false;
+
 		}
 	}
 
@@ -123,7 +121,6 @@ void SceneDev1::Update(float dt)
 		OnEnemyDie(deleteQue.front());
 		deleteQue.pop();
 	}
-	EnemyWave();
 }
 
 void SceneDev1::Draw(sf::RenderWindow& window)
@@ -145,9 +142,10 @@ void SceneDev1::AddTank(int count)
 
 		sf::Vector2f pos = button->GetPosition();
 		tank->SetPosition(pos);
-
+		isTankAttack = false;
 		AddGo(tank);
 	}
+	EnemyWave();
 }
 
 void SceneDev1::SpawnEnemys(int count)
@@ -207,18 +205,21 @@ void SceneDev1::OnEnemyDie(Enemy* enemy)
 void SceneDev1::EnemyWave()
 {
 	int nextwave = 0;
-	if (enemyDeathCount == 10 * wave) {
+	if (enemyDeathCount/10 >= 10 * wave) {
 		nextwave++;
 	}
 	if (wave == nextwave) {
 		wave++;
+		uiHud->Setwave(wave);
 	}
-	uiHud->Setwave(wave);
 }
 
-int SceneDev1::EnemyDeath()
+void SceneDev1::EnemyDeathActive(bool d)
 {
-	return enemyDeathCount += 1;
+	if (d == true) {
+		enemyDeathCount++;
+		std::cout << "enemyDeathCount: " << enemyDeathCount << std::endl;
+	}
 }
 
 bool SceneDev1::TankAttack()
