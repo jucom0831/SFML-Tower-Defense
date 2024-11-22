@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "UiHud.h"
 #include "Button.h";
+#include "EnemyDie.h"
 
 SceneDev1::SceneDev1() : Scene(SceneIds::Dev1)
 {
@@ -51,7 +52,6 @@ void SceneDev1::Exit()
 		bulletPool.Return(bullet);
 	}
 	bullets.clear();
-
 	Scene::Exit();
 }
 
@@ -65,40 +65,39 @@ void SceneDev1::Update(float dt)
 
 	for (auto find : tanks) {
 		if (find != nullptr) {
-			if (find->GetGlobalBounds().contains(mousePos)) {
-				if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left)) {
-					dragOffset = mousePos - find->GetPosition();
-				}
-
-
-				if (isDragging == true && isDragend == false) {
-					find->SetPosition(mousePos - dragOffset);
-				
-				}
-
-				if (InputMgr::GetMouseButtonUp(sf::Mouse::Button::Left)) {
-					if (tilemap->IsValidTankTile(mousePos))
-					{
-						isDragend = true;
-						isTankAttack = true;
+			if (find->IsPlaced() == false && isDragend == false && isDragging == true) {
+				find->SetPosition(mousePos);
+			}
+		}
+		if (find->GetGlobalBounds().contains(mousePos)) {
+			if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right)) {
+				find->TankUpgrade(find);
+			}
+			if (InputMgr::GetMouseButtonUp(sf::Mouse::Button::Left)) {
+				if (tilemap->IsValidTankTile(mousePos))
+				{
+					isDragend = true;
+					find->SetPlaced(true);
+					find->SetAttack(true);
+					tankPos.push_back(find->GetPosition());
+					for(auto f : tankPos)
+					if (find->GetPosition() == f) {
+						RemoveGo(find);
 					}
-					else
-					{
-						
-					}
-					isDragging = false;
 				}
-
-				if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right)) {
-					find->TankUpgrade(find);
+				else
+				{
+					RemoveGo(find);
 				}
+				isDragging = false;
 			}
 		}
 	}
-	if (button->GetGlobalBounds().contains(mousePos) && InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left)) {
-			AddTank(1);
-			isDragend = false;
 
+	if (button->GetGlobalBounds().contains(mousePos) && InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left)) {
+		AddTank(1);
+		isDragend = false;
+		isDragging = true;
 	}
 	spawntime += dt;
 	if (spawntime > spawnDeley) {
@@ -141,7 +140,8 @@ void SceneDev1::AddTank(int count)
 
 		sf::Vector2f pos = button->GetPosition();
 		tank->SetPosition(pos);
-		isTankAttack = false;
+		tank->SetPlaced(false);
+		tank->SetAttack(false);
 		isDragging = true;
 		AddGo(tank);
 	}
@@ -154,25 +154,25 @@ void SceneDev1::SpawnEnemys(int count)
 		Enemy* enemy = enemyPool.Take();
 		enemys.push_back(enemy);
 
-		if (wave > 0) {
-			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 5);
-			enemy->SetType(enemyType);
-		}
-		else if (wave > 3) {
-			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 4);
-			enemy->SetType(enemyType);
-		}
-		else if (wave > 5) {
-			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 3);
+		if (wave > 10) {
+			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 1);
 			enemy->SetType(enemyType);
 		}
 		else if (wave > 8) {
 			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 2);
 			enemy->SetType(enemyType);
 		}
-		else if (wave > 10)
+		else if (wave > 5) {
+			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 3);
+			enemy->SetType(enemyType);
+		}
+		else if (wave > 3) {
+			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 4);
+			enemy->SetType(enemyType);
+		}
+		else if (wave > 0)
 		{
-			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 1);
+			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 5);
 			enemy->SetType(enemyType);
 		}
 
@@ -205,6 +205,14 @@ void SceneDev1::OnEnemyDie(Enemy* enemy)
 	enemys.remove(enemy);
 }
 
+void SceneDev1::OnEnemyDieAnimation(Enemy* enemy)
+{
+	enemyDie = AddGo(new EnemyDie("EnemyDie"));
+	enemyDie->Init();
+	enemyDie->Reset();
+	enemyDie->SetPosition(enemy->GetPosition());
+}
+
 void SceneDev1::ReturnTank(Tank* tank)
 {
 	if (tank != nullptr) {
@@ -231,9 +239,4 @@ void SceneDev1::EnemyDeathActive(bool d)
 		enemyDeathCount++;
 		std::cout << "enemyDeathCount: " << enemyDeathCount << std::endl;
 	}
-}
-
-bool SceneDev1::TankAttack()
-{
-	return isTankAttack;
 }

@@ -36,7 +36,7 @@ protected:
 	int damage = 0;
 
 	bool isAttack = false;
-
+	bool isPlaced = false;
 	bool isActive = true;
 
 public:
@@ -63,6 +63,11 @@ public:
 	sf::FloatRect GetGlobalBounds() const;
 
 	void SetActive(bool active);
+	void SetPlaced(bool placed) { isPlaced = placed; }
 
+	bool IsPlaced() const { return isPlaced; }
+	void SetAttack(bool active) { isAttack = active; }
+
+	sf::Vector2f GetPosition() const { return position; }
 };
 

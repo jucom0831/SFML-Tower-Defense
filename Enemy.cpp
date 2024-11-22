@@ -47,6 +47,7 @@ void Enemy::Init()
 	sortingOrder = -1;
 	isEnemyActive = true;
 	SetType(type);
+
 }
 
 void Enemy::Release()
@@ -89,6 +90,7 @@ void Enemy::Update(float dt)
 		//body.setTexture(TEXTURE_MGR.Get("graphics/blood.png"), true);
 		sceneDev1->OnEnemyDie(this);
 		sceneDev1->EnemyDeathActive(true);
+		sceneDev1->OnEnemyDieAnimation(this);
 	}
 
 	sf::FloatRect localBounds = GetLocalBounds();
@@ -144,8 +146,8 @@ void Enemy::SetType(Types type)
 		hp = 1500;
 		speed = 150.f;
 		break;
-		body.setTexture(TEXTURE_MGR.Get(textureId), true);
 	}
+	body.setTexture(TEXTURE_MGR.Get(textureId), true);
 }
 
 void Enemy::OnDamage(int d)

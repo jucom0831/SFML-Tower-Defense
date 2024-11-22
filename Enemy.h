@@ -37,6 +37,9 @@ protected:
 	float DieTimer = 0.f;
 	float DieDelay = 2.f;
 
+
+	Animator animator;
+
 	std::vector<sf::Vector2f> path = 
 	{ 
 		{620, 0},

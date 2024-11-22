@@ -49,8 +49,7 @@ void Tank::Init()
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 1;
 	SetOrigin(Origins::MC);
-	
-	isAttack = true;
+
 }
 
 void Tank::Release()
@@ -72,7 +71,7 @@ void Tank::Update(float dt)
 {
 	hitbox.UpdateTr(body, GetLocalBounds());
 
-	if (sceneDev1->TankAttack() == true) {
+	if (isAttack == true) {
 		float lookDistance = std::numeric_limits<float>::max();
 		sf::Vector2f lookEnemyPosition;
 		Enemy* lookEnemy = nullptr;
