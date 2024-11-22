@@ -63,42 +63,84 @@ void SceneDev1::Update(float dt)
 
 	Scene::Update(dt);
 
-	for (auto find : tanks) {
-		if (find != nullptr) {
-			if (find->IsPlaced() == false && isDragend == false && isDragging == true) {
-				find->SetPosition(mousePos);
-			}
+	if (tank != nullptr) {
+		if (tank->IsPlaced() == false && isDragend == false && isDragging == true) {
+			tank->SetPosition(mousePos);
 		}
-		if (find->GetGlobalBounds().contains(mousePos)) {
-			if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right)) {
-				find->TankUpgrade(find);
-			}
+		if (tank->GetGlobalBounds().contains(mousePos)) {
 			if (InputMgr::GetMouseButtonUp(sf::Mouse::Button::Left)) {
 				if (tilemap->IsValidTankTile(mousePos))
 				{
 					isDragend = true;
-					find->SetPlaced(true);
-					find->SetAttack(true);
-					
+					tank->SetPlaced(true);
+					tank->SetAttack(true);
+
+					bool isSuccess = true;
+					for (auto f : tanks) {
+						if (tank != nullptr) {
+							if (f->GetGlobalBounds().intersects(tank->GetGlobalBounds())) {
+								isSuccess = false;
+								RemoveGo(tank);
+								tankPool.Return(tank);
+								tank = nullptr;
+								break;
+							}
+						}
+					}
+
+					if(isSuccess)
+						tanks.push_back(tank);
+					tank = nullptr;
 				}
-				else 
+				else
 				{
-					RemoveGo(find);
+					RemoveGo(tank);
+					tankPool.Return(tank);
+					tank = nullptr;
 				}
 				isDragging = false;
 			}
 		}
 	}
 
-	if (button->GetGlobalBounds().contains(mousePos) && InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left)) {
+	for (auto find : tanks) {
+		if (find != nullptr) {
+			if (find->GetGlobalBounds().contains(mousePos)) {
+				if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right) && find->GetType(Tank::Types::Tank3) && Coin >= find->GetMoney()) {
+					find->TankUpgrade(find);
+					SubtractionCoin(find->GetMoney());
+				}
+			}
+		}
+	}
+
+	if (button->GetGlobalBounds().contains(mousePos) && InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left) && Coin >= 40) {
 		AddTank(1);
+
+		Coin -= 40;
 		isDragend = false;
 		isDragging = true;
 	}
+
+
 	spawntime += dt;
-	if (spawntime > spawnDeley) {
+	if (isEnemySpawn == true && spawntime > spawnDeley) {
 		SpawnEnemys(1);
 		spawntime = 0.f;
+		spawnCount++;
+
+		if (spawnCount >= 10) {
+			isEnemySpawn = false;
+		}
+	}
+
+	if (!isEnemySpawn) {
+		waveDelay -= dt;
+		if (waveDelay <= 0.f) {
+			spawnCount = 0;
+			waveDelay = 15.f;
+			isEnemySpawn = true;
+		}
 	}
 
 	std::queue<Enemy*> deleteQue;
@@ -117,7 +159,7 @@ void SceneDev1::Update(float dt)
 	}
 
 	EnemyWave(enemyDeathCount);
-
+	uiHud->SetCoin(Coin);
 }
 
 void SceneDev1::Draw(sf::RenderWindow& window)
@@ -131,8 +173,8 @@ void SceneDev1::AddTank(int count)
 
 	for (int i = 0; i < count; ++i)
 	{
-		Tank* tank = tankPool.Take();
-		tanks.push_back(tank);
+		tank = tankPool.Take();
+		//tanks.push_back(tank);
 
 		sf::Vector2f pos = button->GetPosition();
 		tank->SetPosition(pos);
@@ -211,11 +253,9 @@ void SceneDev1::OnEnemyDieAnimation(Enemy* enemy)
 
 void SceneDev1::ReturnTank(Tank* tank)
 {
-	if (tank != nullptr) {
-		RemoveGo(tank);
-		tankPool.Return(tank);
-		tanks.remove(tank);
-	}
+	RemoveGo(tank);
+	tankPool.Return(tank);
+	tanks.remove(tank);
 }
 
 void SceneDev1::EnemyWave(int count)
@@ -235,4 +275,15 @@ void SceneDev1::EnemyDeathActive(bool d)
 		enemyDeathCount++;
 		std::cout << "enemyDeathCount: " << enemyDeathCount << std::endl;
 	}
+}
+
+int SceneDev1::AddCoin(int c) {
+
+	Coin += c;
+	return Coin;
+}
+
+int SceneDev1::SubtractionCoin(int c) {
+	Coin -= c;
+	return Coin;
 }

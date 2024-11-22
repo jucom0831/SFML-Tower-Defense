@@ -91,6 +91,7 @@ void Enemy::Update(float dt)
 		sceneDev1->OnEnemyDie(this);
 		sceneDev1->EnemyDeathActive(true);
 		sceneDev1->OnEnemyDieAnimation(this);
+		sceneDev1->AddCoin(money);
 	}
 
 	sf::FloatRect localBounds = GetLocalBounds();
@@ -125,29 +126,35 @@ void Enemy::SetType(Types type)
 		textureId = "graphics/enemy1.png";
 		hp = 150;
 		speed = 120.f;
+		money = 20;
 		break;
 	case Types::Enemy2:
 		textureId = "graphics/enemy3.png";
 		hp = 300;
 		speed = 150.f;
+		money = 40;
 		break;
 	case Types::Enemy3:
 		textureId = "graphics/enemy5.png";
-		hp = 1000;
+		hp = 1200;
 		speed = 70.f;
+		money = 100;
 		break;
 	case Types::Enemy4:
 		textureId = "graphics/enemy8.png";
 		hp = 500;
-		speed = 250.f;
+		speed = 350.f;
+		money = 80;
 		break;
 	case Types::Enemy5:
 		textureId = "graphics/enemy15.png";
 		hp = 1500;
 		speed = 150.f;
+		money = 150;
 		break;
 	}
 	body.setTexture(TEXTURE_MGR.Get(textureId), true);
+	
 }
 
 void Enemy::OnDamage(int d)
@@ -168,4 +175,9 @@ sf::FloatRect Enemy::GetLocalBounds() const
 sf::FloatRect Enemy::GetGlobalBounds() const
 {
 	return body.getGlobalBounds();
+}
+
+int Enemy::EnemyMoney()
+{
+	return money;
 }

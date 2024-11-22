@@ -115,18 +115,24 @@ void Tank::SetType(Types type)
 	{
 	case Types::Tank1:
 		textureId = "graphics/Tank1.png";
-		range = 800;
-		damage = 10;
+		rangetank = {200, 200};
+		damage = 20;
+		upgradeMoney = 0;
+		shootDelay = 0.8f;
 		break;
 	case Types::Tank2:
 		textureId = "graphics/Tank2.png";
-		range = 750;
+		rangetank = {300, 300};
 		damage = 30;
+		upgradeMoney = 100;
+		shootDelay = 0.4f;
 		break;
 	case Types::Tank3:
 		textureId = "graphics/Tank3.png";
-		damage = 50;
-		range = 700;
+		damage = 40;
+		rangetank = {400, 400};
+		shootDelay = 0.2f;
+		upgradeMoney = 300;
 		break;
 	}
 	body.setTexture(TEXTURE_MGR.Get(textureId), true);
@@ -156,4 +162,19 @@ sf::FloatRect Tank::GetGlobalBounds() const
 void Tank::SetActive(bool active)
 {
 	isActive = active;
+}
+
+int Tank::GetMoney() {
+	return upgradeMoney;
+}
+
+bool Tank::GetType(Types types)
+{ 
+	if (type != types) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
 }

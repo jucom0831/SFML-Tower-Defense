@@ -33,9 +33,10 @@ protected:
 	bool isEnemyActive = false;
 	bool isEnemyDead = false;
 	int hp = 0;
-
+	int money = 0;
 	float DieTimer = 0.f;
 	float DieDelay = 2.f;
+
 
 
 	Animator animator;
@@ -82,5 +83,7 @@ public:
 
 	sf::FloatRect GetLocalBounds() const override;
 	sf::FloatRect GetGlobalBounds() const override;
+
+	int EnemyMoney();
 };
 

@@ -11,6 +11,9 @@ protected:
 
 	sf::Text textWave;
 
+	sf::Sprite CoinIcon;
+	sf::Text Cointext;
+
 public:
 	UiHud(const std::string& name = "");
 	~UiHud() = default;
@@ -30,4 +33,5 @@ public:
 
 	void SetHpText(int s, int t);
 	void Setwave(int w);
+	void SetCoin(int c);
 };

@@ -70,7 +70,16 @@ void UiHud::Reset()
 	textWave.setPosition(480.f, 20.f);
 	textWave.setScale(0.6f, 1.0f);
 
+	Cointext.setFont(font);
+	Cointext.setCharacterSize(textSize);
+	Cointext.setFillColor(sf::Color::White);
+	Cointext.setPosition(971.5f, 335.f);
+	Cointext.setScale(0.4f, 1.0f);
 
+	CoinIcon.setTexture(TEXTURE_MGR.Get("graphics/$64.png"));
+	Utils::SetOrigin(CoinIcon, Origins::MC);
+	CoinIcon.setScale(0.5f, 0.7f);
+	CoinIcon.setPosition(972.f, 300.f);
 	SetHpText(10, 10);
 	Setwave(1);
 }
@@ -85,6 +94,8 @@ void UiHud::Draw(sf::RenderWindow& window)
 	window.draw(hpIcon);
 	window.draw(addTank);
 	window.draw(textWave);
+	window.draw(CoinIcon);
+	window.draw(Cointext);
 }
 
 void UiHud::SetHpText(int s, int t)
@@ -97,4 +108,10 @@ void UiHud::Setwave(int w)
 {
 	textWave.setString("Wave : " + std::to_string(w));
 	Utils::SetOrigin(textWave, Origins::MC);
+}
+
+void UiHud::SetCoin(int c)
+{
+	Cointext.setString(std::to_string(c));
+	Utils::SetOrigin(Cointext, Origins::MC);
 }

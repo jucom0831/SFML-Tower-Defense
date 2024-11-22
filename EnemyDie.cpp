@@ -43,18 +43,18 @@ void EnemyDie::SetOrigin(const sf::Vector2f& newOrigin)
 void EnemyDie::Init()
 {
 	animator.SetTarget(&body);
-
-	std::string textureId = "graphics/exp2.png";
-	int width = 62;
-	int height = 62;
+	SetScale({0.7f, 0.7f});
+	std::string textureId = "graphics/explosionspritesheet8.png";
+	int width = 130;
+	int height = 130;
 
 	AnimationClip clip;
 	clip.id = "Enemydie";
-	clip.fps = 10;
+	clip.fps = 25;
 	clip.loopType = AnimationLoopTypes::Single;
-	for (int j = 0; j < 4; ++j)
+	for (int j = 0; j < 5; ++j)
 	{
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < 5; ++i)
 		{
 			clip.frames.push_back({ textureId, { i * width, j * height, width, height } });
 		}

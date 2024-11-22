@@ -25,15 +25,16 @@ protected:
 
 	sf::Vector2f direction;
 	sf::Vector2f look;
-	sf::Vector2f rangetank = { 200.f, 200.f };
+	sf::Vector2f rangetank;
 
 
 	SceneDev1* sceneDev1;
 	Enemy* enemy;
 	float shootTimer = 0.f;
-	float shootDelay = 0.8f;
+	float shootDelay = 0.f;
 	int range;
 	int damage = 0;
+	int upgradeMoney = 0;
 
 	bool isAttack = false;
 	bool isPlaced = false;
@@ -63,6 +64,7 @@ public:
 	sf::FloatRect GetGlobalBounds() const;
 
 	void SetActive(bool active);
+	int GetMoney();
 	void SetPlaced(bool placed) { isPlaced = placed; }
 
 	bool IsPlaced() const { return isPlaced; }
@@ -70,6 +72,7 @@ public:
 
 	sf::Vector2f GetPosition() const { return position; }
 
+	bool GetType(Types types);
 	
 };
 

@@ -68,7 +68,6 @@ void Bullet::Reset()
 
 	body.setTexture(TEXTURE_MGR.Get(textureId));
 	SetOrigin(Origins::MC);
-
 	SetPosition({ 0.f, 0.f });
 	SetScale({ 1.5f, 1.5f });
 }
@@ -109,7 +108,6 @@ void Bullet::FixedUpdate(float dt)
 			{
 					enemy->OnDamage(damage);
 					sceneDev1->ReturnBullet(this);
-				
 			}
 		}
 	}

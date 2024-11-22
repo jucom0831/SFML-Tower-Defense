@@ -21,6 +21,7 @@ protected:
 	Button* button;
 	EnemyDie* enemyDie;
 
+	
 	std::list<Tank*> tanks;
 	ObjectPool<Tank> tankPool;
 
@@ -37,6 +38,7 @@ protected:
 	float spawnDeley = 2.f;
 	float spawntime = 0.f;
 	float wavetime = 0.f;
+	int spawnCount = 0;
 
 	int mainHp = 10;
 	int maxHp = 10;
@@ -48,6 +50,13 @@ protected:
 	bool isEnemydie = false;
 	bool isTankAttack = false;
 
+	std::queue<Tank*> deleteTankQue;
+
+	float waveDelay = 15.f;
+	
+	bool isEnemySpawn = true;
+
+	int Coin = 10000;
 
 public:
 
@@ -79,6 +88,8 @@ public:
 	void EnemyWave(int count);
 
 	void EnemyDeathActive(bool d);
-	bool IsTankAtPosition(const sf::Vector2f& position);
+
+	int AddCoin(int c);
+	int SubtractionCoin(int c);
 };
 
