@@ -69,5 +69,7 @@ public:
 	void SetAttack(bool active) { isAttack = active; }
 
 	sf::Vector2f GetPosition() const { return position; }
+
+	
 };
 

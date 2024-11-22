@@ -79,13 +79,9 @@ void SceneDev1::Update(float dt)
 					isDragend = true;
 					find->SetPlaced(true);
 					find->SetAttack(true);
-					tankPos.push_back(find->GetPosition());
-					for(auto f : tankPos)
-					if (find->GetPosition() == f) {
-						RemoveGo(find);
-					}
+					
 				}
-				else
+				else 
 				{
 					RemoveGo(find);
 				}
