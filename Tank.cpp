@@ -118,19 +118,19 @@ void Tank::SetType(Types type)
 		textureId = "graphics/Tank1.png";
 		rangetank = {200, 200};
 		damage = 8;
-		upgradeMoney = 0;
+		upgradeMoney = 40;
 		shootDelay = 0.8f;
 		break;
 	case Types::Tank2:
 		textureId = "graphics/Tank2.png";
 		rangetank = {300, 300};
-		damage = 10;
+		damage = 8;
 		upgradeMoney = 100;
 		shootDelay = 0.4f;
 		break;
 	case Types::Tank3:
 		textureId = "graphics/Tank3.png";
-		damage = 15;
+		damage = 8;
 		rangetank = {400, 400};
 		shootDelay = 0.2f;
 		upgradeMoney = 300;

@@ -58,6 +58,11 @@ void SceneDev1::Exit()
 		bulletPool.Return(bullet);
 	}
 	bullets.clear();
+	for (auto tank : tanks) {
+		RemoveGo(tank);
+		tankPool.Return(tank);
+	}
+	tanks.clear();
 	Scene::Exit();
 }
 
@@ -131,6 +136,19 @@ void SceneDev1::Update(float dt)
 				if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right) && find->GetType(Tank::Types::Tank2) && Coin >= 300) {
 					find->TankUpgrade(find);
 					SubtractionCoin(find->GetMoney());
+				}
+			}
+		}
+	}
+
+	for (auto find : tanks) {
+		if (find != nullptr) {
+			if (find->GetGlobalBounds().contains(mousePos)) {
+				if (InputMgr::GetKeyDown(sf::Keyboard::E)) {
+					RemoveGo(find);
+					tankPool.Return(find);
+					Coin += find->GetMoney()/2;
+					tanks.clear();
 				}
 			}
 		}
