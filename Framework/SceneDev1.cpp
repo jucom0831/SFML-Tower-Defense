@@ -148,7 +148,6 @@ void SceneDev1::Update(float dt)
 					RemoveGo(find);
 					tankPool.Return(find);
 					Coin += find->GetMoney()/2;
-					tanks.clear();
 				}
 			}
 		}
@@ -206,6 +205,11 @@ void SceneDev1::Update(float dt)
 
 	EnemyWave(enemyDeathCount);
 	uiHud->SetCoin(Coin);
+
+	if (enemyDeathCount == 100) {
+		SCENE_MGR.ChangeScene(SceneIds::Dev2);
+	}
+
 }
 
 void SceneDev1::Draw(sf::RenderWindow& window)
