@@ -131,25 +131,25 @@ void Enemy::SetType(Types type)
 		break;
 	case Types::Enemy2:
 		textureId = "graphics/enemy3.png";
-		hp = 300;
+		hp = 700;
 		speed = 150.f;
-		money = 40;
+		money = 30;
 		break;
 	case Types::Enemy3:
 		textureId = "graphics/enemy5.png";
-		hp = 1200;
+		hp = 2000;
 		speed = 70.f;
-		money = 100;
+		money = 40;
 		break;
 	case Types::Enemy4:
-		textureId = "graphics/enemy8.png";
-		hp = 500;
+		textureId = "graphics/enemy13.png";
+		hp = 1000;
 		speed = 200.f;
-		money = 80;
+		money = 50;
 		break;
 	case Types::Enemy5:
-		textureId = "graphics/enemy15.png";
-		hp = 1500;
+		textureId = "graphics/enemy22.png";
+		hp = 2000;
 		speed = 150.f;
 		money = 150;
 		break;
