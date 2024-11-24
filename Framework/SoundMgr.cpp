@@ -60,31 +60,16 @@ void SoundMgr::StopBgm()
 }
 
 void SoundMgr::PlaySfx(std::string id, bool loop)
-{	
+{
 	PlaySfx(SOUNDBUFFER_MGR.Get(id), loop);
 }
 
 void SoundMgr::PlaySfx(sf::SoundBuffer& buffer, bool loop)
 {
-	sf::Sound* sound = nullptr;
-
-	if (waiting.empty())
-	{
-		sound = playing.front();
-		playing.pop_front();
-		sound->stop();
-	}
-	else
-	{
-		sound = waiting.front();
-		waiting.pop_front();
-	}
-
-	sound->setVolume(sfxVolume);
-	sound->setBuffer(buffer);
-	sound->setLoop(loop);
-	sound->play();
-	playing.push_back(sound);
+	sfx.stop();
+	sfx.setLoop(loop);
+	sfx.setBuffer(buffer);
+	sfx.play();
 }
 
 void SoundMgr::SetSfxVolume(float v)

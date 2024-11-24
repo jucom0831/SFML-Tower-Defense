@@ -1,31 +1,31 @@
 #include "stdafx.h"
-#include "Enemy.h"
+#include "BossEnemy.h"
 #include "SceneDev1.h"
 
-Enemy::Enemy(const std::string& name)
+BossEnemy::BossEnemy(const std::string& name)
 	: GameObject(name)
 {
 }
 
-void Enemy::SetPosition(const sf::Vector2f& pos)
+void BossEnemy::SetPosition(const sf::Vector2f& pos)
 {
 	position = pos;
 	body.setPosition(position);
 }
 
-void Enemy::SetRotation(float angle)
+void BossEnemy::SetRotation(float angle)
 {
 	rotation = angle;
 	body.setRotation(rotation);
 }
 
-void Enemy::SetScale(const sf::Vector2f& s)
+void BossEnemy::SetScale(const sf::Vector2f& s)
 {
 	scale = s;
 	body.setScale(scale);
 }
 
-void Enemy::SetOrigin(Origins preset)
+void BossEnemy::SetOrigin(Origins preset)
 {
 	originPreset = preset;
 	if (originPreset != Origins::Custom)
@@ -34,27 +34,25 @@ void Enemy::SetOrigin(Origins preset)
 	}
 }
 
-void Enemy::SetOrigin(const sf::Vector2f& newOrigin)
+void BossEnemy::SetOrigin(const sf::Vector2f& newOrigin)
 {
 	originPreset = Origins::Custom;
 	origin = newOrigin;
 	body.setOrigin(origin);
 }
 
-void Enemy::Init()
+void BossEnemy::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = -1;
 	isEnemyActive = true;
-	SetType(type);
-
 }
 
-void Enemy::Release()
+void BossEnemy::Release()
 {
 }
 
-void Enemy::Reset()
+void BossEnemy::Reset()
 {
 	sceneDev1 = dynamic_cast<SceneDev1*>(SCENE_MGR.GetCurrentScene());
 	body.setTexture(TEXTURE_MGR.Get(textureId), true);
@@ -65,7 +63,7 @@ void Enemy::Reset()
 	currentTargetIndex = 0;
 }
 
-void Enemy::Update(float dt)
+void BossEnemy::Update(float dt)
 {
 
 	sf::Vector2f target = path[currentTargetIndex];
@@ -88,17 +86,17 @@ void Enemy::Update(float dt)
 	{
 		isEnemyActive = false;
 		//body.setTexture(TEXTURE_MGR.Get("graphics/blood.png"), true);
-		sceneDev1->OnEnemyDie(this);
 		sceneDev1->EnemyDeathActive(true);
-		sceneDev1->OnEnemyDieAnimation(this);
+		sceneDev1->OnBossEnemyDie(this);
 		sceneDev1->AddCoin(money);
 		SOUND_MGR.PlaySfx("graphics/explosion.wav", false);
+		SCENE_MGR.ChangeScene(SceneIds::Dev2);
 	}
 
 	sf::FloatRect localBounds = GetLocalBounds();
 	float hitboxscale = 0.4f;
 
-	
+
 	sf::FloatRect scaledBounds = {
 		localBounds.left ,
 		localBounds.top + 23.f,
@@ -112,73 +110,33 @@ void Enemy::Update(float dt)
 }
 
 
-void Enemy::Draw(sf::RenderWindow& window)
+void BossEnemy::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
 	hitbox.Draw(window);
 }
 
-void Enemy::SetType(Types type)
-{
-	this->type = type;
-	switch (this->type)
-	{
-	case Types::Enemy1:
-		textureId = "graphics/enemy1.png";
-		hp = 150;
-		speed = 120.f;
-		money = 20;
-		break;
-	case Types::Enemy2:
-		textureId = "graphics/enemy3.png";
-		hp = 300;
-		speed = 150.f;
-		money = 40;
-		break;
-	case Types::Enemy3:
-		textureId = "graphics/enemy5.png";
-		hp = 1200;
-		speed = 70.f;
-		money = 100;
-		break;
-	case Types::Enemy4:
-		textureId = "graphics/enemy8.png";
-		hp = 500;
-		speed = 200.f;
-		money = 80;
-		break;
-	case Types::Enemy5:
-		textureId = "graphics/enemy15.png";
-		hp = 1500;
-		speed = 150.f;
-		money = 150;
-		break;
-	}
-	body.setTexture(TEXTURE_MGR.Get(textureId), true);
-	
-}
-
-void Enemy::OnDamage(int d)
+void BossEnemy::OnDamage(int d)
 {
 	hp -= d;
 }
 
-bool Enemy::OnEnemyDead()
+bool BossEnemy::OnEnemyDead()
 {
 	return isEnemyDead;
 }
 
-sf::FloatRect Enemy::GetLocalBounds() const
+sf::FloatRect BossEnemy::GetLocalBounds() const
 {
 	return body.getLocalBounds();
 }
 
-sf::FloatRect Enemy::GetGlobalBounds() const
+sf::FloatRect BossEnemy::GetGlobalBounds() const
 {
 	return body.getGlobalBounds();
 }
 
-int Enemy::EnemyMoney()
+int BossEnemy::EnemyMoney()
 {
 	return money;
 }

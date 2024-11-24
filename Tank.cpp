@@ -69,7 +69,7 @@ void Tank::Reset()
 
 void Tank::Update(float dt)
 {
-	hitbox.UpdateTr(body, GetLocalBounds());
+	hitbox.UpdateTankTr(body, GetLocalBounds());
 
 	if (isAttack == true) {
 		float lookDistance = std::numeric_limits<float>::max();
@@ -106,6 +106,7 @@ void Tank::Update(float dt)
 void Tank::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
+	hitbox.Draw(window);
 }
 
 void Tank::SetType(Types type)
@@ -116,20 +117,20 @@ void Tank::SetType(Types type)
 	case Types::Tank1:
 		textureId = "graphics/Tank1.png";
 		rangetank = {200, 200};
-		damage = 20;
+		damage = 8;
 		upgradeMoney = 0;
 		shootDelay = 0.8f;
 		break;
 	case Types::Tank2:
 		textureId = "graphics/Tank2.png";
 		rangetank = {300, 300};
-		damage = 30;
+		damage = 10;
 		upgradeMoney = 100;
 		shootDelay = 0.4f;
 		break;
 	case Types::Tank3:
 		textureId = "graphics/Tank3.png";
-		damage = 40;
+		damage = 15;
 		rangetank = {400, 400};
 		shootDelay = 0.2f;
 		upgradeMoney = 300;
@@ -170,7 +171,7 @@ int Tank::GetMoney() {
 
 bool Tank::GetType(Types types)
 { 
-	if (type != types) {
+	if (type == types) {
 		return true;
 	}
 	else {

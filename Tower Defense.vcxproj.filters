@@ -102,6 +102,21 @@
     <ClInclude Include="EnemyDie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="SceneStart.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="UiStart.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UiEnd.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UiBackGround.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BossEnemy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\stdafx.cpp">
@@ -174,6 +189,21 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="EnemyDie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneStart.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="UiStart.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UiEnd.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UiBackGround.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BossEnemy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -73,15 +73,46 @@ void UiHud::Reset()
 	Cointext.setFont(font);
 	Cointext.setCharacterSize(textSize);
 	Cointext.setFillColor(sf::Color::White);
-	Cointext.setPosition(971.5f, 335.f);
+	Cointext.setPosition(971.5f, 435.f);
 	Cointext.setScale(0.4f, 1.0f);
 
 	CoinIcon.setTexture(TEXTURE_MGR.Get("graphics/$64.png"));
 	Utils::SetOrigin(CoinIcon, Origins::MC);
 	CoinIcon.setScale(0.5f, 0.7f);
-	CoinIcon.setPosition(972.f, 300.f);
+	CoinIcon.setPosition(972.f, 400.f);
 	SetHpText(10, 10);
 	Setwave(1);
+
+	timeSpeed.setTexture(TEXTURE_MGR.Get("graphics/speedUp_btn.png"));
+	Utils::SetOrigin(timeSpeed, Origins::MC);
+	timeSpeed.setScale(0.5f, 0.8f);
+	timeSpeed.setPosition(972.f, 700.f);
+
+
+	tank2.setTexture(TEXTURE_MGR.Get("graphics/Tank2.png"));
+	Utils::SetOrigin(tank2, Origins::MC);
+	tank2.setPosition(970.f, 200.f);
+	tank2.setScale(0.6f, 1.0f);
+	tank2UpgradeCost.setFont(font);
+	tank2UpgradeCost.setCharacterSize(textSize);
+	tank2UpgradeCost.setFillColor(sf::Color::White);
+	tank2UpgradeCost.setPosition(960.f, 235.f);
+	tank2UpgradeCost.setScale(0.4f, 1.0f);
+	tank2UpgradeCost.setString("$100");
+	tank3.setTexture(TEXTURE_MGR.Get("graphics/Tank2.png"));
+	Utils::SetOrigin(tank3, Origins::MC);
+	tank3.setPosition(970.f, 300.f);
+	tank3.setScale(0.6f, 1.0f);
+	tank3UpgradeCost.setFont(font);
+	tank3UpgradeCost.setCharacterSize(textSize);
+	tank3UpgradeCost.setFillColor(sf::Color::White);
+	tank3UpgradeCost.setPosition(960.f, 335.f);
+	tank3UpgradeCost.setScale(0.4f, 1.0f);
+	tank3UpgradeCost.setString("$300");
+
+
+
+
 }
 
 void UiHud::Update(float dt)
@@ -96,6 +127,11 @@ void UiHud::Draw(sf::RenderWindow& window)
 	window.draw(textWave);
 	window.draw(CoinIcon);
 	window.draw(Cointext);
+	window.draw(timeSpeed);
+	window.draw(tank2);
+	window.draw(tank2UpgradeCost);
+	window.draw(tank3);
+	window.draw(tank3UpgradeCost);
 }
 
 void UiHud::SetHpText(int s, int t)
@@ -114,4 +150,14 @@ void UiHud::SetCoin(int c)
 {
 	Cointext.setString(std::to_string(c));
 	Utils::SetOrigin(Cointext, Origins::MC);
+}
+
+sf::FloatRect UiHud::GetLocalBounds() const
+{
+	return timeSpeed.getLocalBounds();
+}
+
+sf::FloatRect UiHud::GetGlobalBounds() const
+{
+	return timeSpeed.getGlobalBounds();
 }

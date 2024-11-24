@@ -1,15 +1,17 @@
 #pragma once
 #include "Scene.h"
-class UiEnd;
 
-class SceneDev2 : public Scene
+class UiStart;
+
+class SceneStart :
+    public Scene
 {
 protected:
-	UiEnd* uiEnd;
+	UiStart* uiStart;
 
 public:
-	SceneDev2();
-	~SceneDev2() = default;
+	SceneStart();
+	~SceneStart() = default;
 
 	void Init() override;
 	void Enter() override;

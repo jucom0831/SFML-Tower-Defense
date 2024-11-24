@@ -7,6 +7,8 @@
 #include "UiHud.h"
 #include "Button.h";
 #include "EnemyDie.h"
+#include "UiBackGround.h"
+#include "BossEnemy.h"
 
 SceneDev1::SceneDev1() : Scene(SceneIds::Dev1)
 {
@@ -17,16 +19,17 @@ void SceneDev1::Init()
 	tilemap = AddGo(new Tilemap("Tilemap"));
 	uiHud = AddGo(new UiHud("Ui"));
 	button = AddGo(new Button("Button"));
+	uiBackGround = AddGo(new UiBackGround("BackGround"));
 
 	Scene::Init();
 
 	spawntime = 3.f;
+	isBossSpawn = false;
 }
 
 void SceneDev1::Release()
 {
 	Scene::Release();
-
 }
 
 
@@ -36,6 +39,9 @@ void SceneDev1::Enter()
 	Scene::Enter();
 	worldView.setSize(FRAMEWORK.GetWindowSizeF());
 	worldView.setCenter(0.f, 0.f);
+
+	SOUND_MGR.PlayBgm("graphics/superhappycheesyloop2of2.wav", true);
+
 }
 
 void SceneDev1::Exit()
@@ -57,11 +63,21 @@ void SceneDev1::Exit()
 
 void SceneDev1::Update(float dt)
 {
+	
 	sf::Vector2f mousePos = ScreenToWorld(InputMgr::GetMousePosition());
 	//std::cout << mousePos.x << "," << mousePos.y << std::endl;
 	sf::Vector2f mouseUiPos = ScreenToUi(InputMgr::GetMousePosition());
+	float adjustedDt = isDoubleSpeed ? dt * 2.0f : dt;
 
-	Scene::Update(dt);
+	Scene::Update(adjustedDt);
+
+
+	if (uiHud->GetGlobalBounds().contains(mouseUiPos)) {
+		if (InputMgr::GetMouseButtonUp(sf::Mouse::Button::Left)) {
+			isDoubleSpeed = !isDoubleSpeed;
+		}
+	}
+
 
 	if (tank != nullptr) {
 		if (tank->IsPlaced() == false && isDragend == false && isDragging == true) {
@@ -83,6 +99,7 @@ void SceneDev1::Update(float dt)
 								RemoveGo(tank);
 								tankPool.Return(tank);
 								tank = nullptr;
+								Coin += 40;
 								break;
 							}
 						}
@@ -96,6 +113,7 @@ void SceneDev1::Update(float dt)
 				{
 					RemoveGo(tank);
 					tankPool.Return(tank);
+					Coin += 40;
 					tank = nullptr;
 				}
 				isDragging = false;
@@ -106,7 +124,11 @@ void SceneDev1::Update(float dt)
 	for (auto find : tanks) {
 		if (find != nullptr) {
 			if (find->GetGlobalBounds().contains(mousePos)) {
-				if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right) && find->GetType(Tank::Types::Tank3) && Coin >= find->GetMoney()) {
+				if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right) && find->GetType(Tank::Types::Tank1) && Coin >= 100) {
+					find->TankUpgrade(find);
+					SubtractionCoin(find->GetMoney());
+				}
+				if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right) && find->GetType(Tank::Types::Tank2) && Coin >= 300) {
 					find->TankUpgrade(find);
 					SubtractionCoin(find->GetMoney());
 				}
@@ -116,26 +138,28 @@ void SceneDev1::Update(float dt)
 
 	if (button->GetGlobalBounds().contains(mousePos) && InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left) && Coin >= 40) {
 		AddTank(1);
-
+		SOUND_MGR.PlaySfx("graphics/cash-register.wav", false);
 		Coin -= 40;
 		isDragend = false;
 		isDragging = true;
 	}
 
 
-	spawntime += dt;
+	spawntime += adjustedDt;
 	if (isEnemySpawn == true && spawntime > spawnDeley) {
 		SpawnEnemys(1);
+		//SpawnBossEnemys(1);
 		spawntime = 0.f;
 		spawnCount++;
 
 		if (spawnCount >= 10) {
 			isEnemySpawn = false;
+			isCount = true;
 		}
 	}
 
-	if (!isEnemySpawn) {
-		waveDelay -= dt;
+	if (!isEnemySpawn && enemys.size() == 0) {
+		waveDelay -= adjustedDt;
 		if (waveDelay <= 0.f) {
 			spawnCount = 0;
 			waveDelay = 15.f;
@@ -149,7 +173,11 @@ void SceneDev1::Update(float dt)
 			mainHp--;
 			enemyDeathCount++;
 			uiHud->SetHpText(mainHp, maxHp);
+			if (mainHp <= 0) {
+				SCENE_MGR.ChangeScene(SceneIds::Dev2);
+			}
 			deleteQue.push(find);
+			
 		}
 	}
 	while (!deleteQue.empty())
@@ -192,19 +220,19 @@ void SceneDev1::SpawnEnemys(int count)
 		Enemy* enemy = enemyPool.Take();
 		enemys.push_back(enemy);
 
-		if (wave > 10) {
+		if (wave > 9) {
 			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 1);
 			enemy->SetType(enemyType);
 		}
-		else if (wave > 8) {
+		else if (wave >= 7) {
 			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 2);
 			enemy->SetType(enemyType);
 		}
-		else if (wave > 5) {
+		else if (wave >= 5) {
 			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 3);
 			enemy->SetType(enemyType);
 		}
-		else if (wave > 3) {
+		else if (wave >= 3 ) {
 			Enemy::Types enemyType = (Enemy::Types)Utils::RandomRange(0, Enemy::TotalTypes - 4);
 			enemy->SetType(enemyType);
 		}
@@ -220,6 +248,18 @@ void SceneDev1::SpawnEnemys(int count)
 		AddGo(enemy);
 	}
 }
+
+//void SceneDev1::SpawnBossEnemys(int count) {
+//	if (wave == 2) {
+//		for (int i = 0; i < count; ++i) {
+//			bossEnemy = AddGo(new BossEnemy("BossEnemy"));
+//			if (bossEnemy) {
+//				std::cout << "Boss enemy added successfully." << std::endl;
+//			}
+//		}
+//
+//	}
+//}
 
 Bullet* SceneDev1::TakeBullet()
 {
@@ -243,6 +283,11 @@ void SceneDev1::OnEnemyDie(Enemy* enemy)
 	enemys.remove(enemy);
 }
 
+void SceneDev1::OnBossEnemyDie(BossEnemy* bossEnemy)
+{
+	RemoveGo(bossEnemy);
+}
+
 void SceneDev1::OnEnemyDieAnimation(Enemy* enemy)
 {
 	enemyDie = AddGo(new EnemyDie("EnemyDie"));
@@ -260,13 +305,16 @@ void SceneDev1::ReturnTank(Tank* tank)
 
 void SceneDev1::EnemyWave(int count)
 {
-	if (count == 10 * wave) {
-		waveCount++;
+	if (wave < 10) {
+		if (!isEnemySpawn && isCount) {
+			waveCount++;
+			isCount = false;
+		}
+		if (wave == waveCount) {
+			wave++;
+		}
+		uiHud->Setwave(wave);
 	}
-	if (wave == waveCount) {
-		wave++;
-	}
-	uiHud->Setwave(wave);
 }
 
 void SceneDev1::EnemyDeathActive(bool d)

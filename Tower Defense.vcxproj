@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="Animator.h" />
+    <ClInclude Include="BossEnemy.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Enemy.h" />
@@ -44,13 +45,18 @@
     <ClInclude Include="Framework\TextGo.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="Framework\Variables.h" />
+    <ClInclude Include="SceneStart.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tilemap.h" />
+    <ClInclude Include="UiBackGround.h" />
+    <ClInclude Include="UiEnd.h" />
     <ClInclude Include="UiHud.h" />
+    <ClInclude Include="UiStart.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="BossEnemy.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -70,9 +76,13 @@
     <ClCompile Include="Framework\TextGo.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="Framework\Variables.cpp" />
+    <ClCompile Include="SceneStart.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tilemap.cpp" />
+    <ClCompile Include="UiBackGround.cpp" />
+    <ClCompile Include="UiEnd.cpp" />
     <ClCompile Include="UiHud.cpp" />
+    <ClCompile Include="UiStart.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -131,7 +141,7 @@
     <TargetName>$(ProjectName)-d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>C:\Users\KGA\Documents\SFML-Tower-Defense\Tower Defense bin\bin</OutDir>
+    <OutDir>$(SolutionDir)$(ProjectName) bin\tower bin</OutDir>
     <TargetName>$(ProjectName)-d</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -187,7 +197,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\KGA\Documents\SFML-Tower-Defense\Tower Defense bin\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName) bin\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>

@@ -8,6 +8,8 @@ class Enemy;
 class UiHud;
 class Button;
 class EnemyDie;
+class UiBackGround;
+class BossEnemy;
 
 class SceneDev1 : public Scene
 {
@@ -20,8 +22,9 @@ protected:
 	UiHud* uiHud;
 	Button* button;
 	EnemyDie* enemyDie;
+	UiBackGround* uiBackGround;
+	BossEnemy* bossEnemy;
 
-	
 	std::list<Tank*> tanks;
 	ObjectPool<Tank> tankPool;
 
@@ -53,11 +56,14 @@ protected:
 	std::queue<Tank*> deleteTankQue;
 
 	float waveDelay = 15.f;
-	
+	float countDeley = 10.f;
 	bool isEnemySpawn = true;
 
-	int Coin = 10000;
+	int Coin = 100;
+	bool isCount = false;
 
+	bool isDoubleSpeed = false;
+	bool isBossSpawn = false;
 public:
 
 	bool isDragging = false;
@@ -76,11 +82,14 @@ public:
 	void AddTank(int count);
 	void SpawnEnemys(int count);
 
+	void SpawnBossEnemys(int count);
+
 	Bullet* TakeBullet();
 	void ReturnBullet(Bullet* bullet);
 	const std::list<Enemy*>& GetEnemyList() const { return enemys; }
 
 	void OnEnemyDie(Enemy* enemy);
+	void OnBossEnemyDie(BossEnemy* bossEnemy);
 	void OnEnemyDieAnimation(Enemy* enemy);
 
 	void ReturnTank(Tank* tank);
