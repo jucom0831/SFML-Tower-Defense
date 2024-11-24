@@ -63,6 +63,10 @@ void SceneDev1::Exit()
 		tankPool.Return(tank);
 	}
 	tanks.clear();
+	wave = 1;
+	mainHp = 10;
+	Coin = 100;
+
 	Scene::Exit();
 }
 
